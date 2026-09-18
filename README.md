@@ -1,17 +1,23 @@
-# Ortus Profile Desk — private team distribution
+# Ortus Profile Desk — private team downloads
 
-This private repository is reserved for team-only Mac installers of Ortus Profile Desk. Generic application source remains at https://github.com/ortusclub/ortus-profile-desk.
+## Install on your Mac
 
-## Planned team build
+Your GitHub account must have access to this private repository. Open Terminal and paste:
 
-- Preconfigured connection to a single shared Ortus workspace.
-- No individual login or manual workspace-code entry initially.
-- Shared profiles seeded from active account-sheet rows and grouped by VM Account.
-- New profiles and saved changes synchronize between connected installations.
-- Exclusive profile access prevents conflicting browser-session writes.
+```sh
+installer=$(mktemp) && curl -fsSL https://raw.githubusercontent.com/ortusclub/ortus-profile-desk/main/scripts/install.sh -o "$installer" && bash "$installer"
+```
 
-No shared service or team installer has been deployed yet. The hosting target and live-session behavior are still being confirmed.
+The installer downloads the latest private release, verifies it and installs it in Applications. It installs GitHub CLI via Homebrew if needed and prompts for GitHub sign-in. Without Homebrew, install GitHub CLI from https://cli.github.com first and rerun the command. Install Google Chrome to open profiles. macOS 13 or later is required; Intel and Apple Silicon are supported.
 
-Team connection credentials must only be included in private build artifacts. They must never be added to the public source repository or public releases. Live browser-profile data belongs in the shared service, not this code repository.
+Alternatively, download **Ortus-Profile-Desk-universal.dmg** from [Releases](https://github.com/ortusclub/ortus-profile-desk-team/releases), open it and drag the app into Applications. If macOS blocks the app, use System Settings → Privacy & Security → Open Anyway for this trusted team download. The current app is ad-hoc signed, not Apple-notarized.
 
-Access to the eventual team installer grants workspace access. Distribute it only to authorized team members. Repository access is limited to invited collaborators.
+## Updates
+
+The sidebar shows the current version and **Check for updates**. The app checks automatically at startup and every four hours, downloads newer releases in the background, then offers **Restart to update**. Close profile windows before restarting. GitHub CLI must remain installed and signed into an account with access to this repository. Existing saved profiles are preserved.
+
+## Current status
+
+**0.1.3 is an installer/update preview with local profiles. Shared profiles and saved browser-session synchronization are not enabled yet.** A later private build will connect to the shared workspace automatically.
+
+Source: https://github.com/ortusclub/ortus-profile-desk. Never commit workspace credentials, browser sessions or account passwords to either repository.
