@@ -5,3 +5,4 @@
 *.dmg
 *.zip
 team-config.json
+.private/

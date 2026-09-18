@@ -1,23 +1,30 @@
 # Ortus Profile Desk — private team downloads
 
-## Install on your Mac
+## Install
 
-Your GitHub account must have access to this private repository. Open Terminal and paste:
+Download **Ortus-Profile-Desk-universal.dmg** from [Releases](https://github.com/ortusclub/ortus-profile-desk-team/releases), open it and drag the app into Applications. Requires Google Chrome and macOS 13+; supports Intel and Apple Silicon. This build is ad-hoc signed, not Apple-notarized. If macOS blocks opening your trusted download, use System Settings → Privacy & Security → Open Anyway.
+
+For Terminal installation, install GitHub CLI (`brew install gh` or https://cli.github.com), then run:
 
 ```sh
-installer=$(mktemp) && curl -fsSL https://raw.githubusercontent.com/ortusclub/ortus-profile-desk/main/scripts/install.sh -o "$installer" && bash "$installer"
+gh auth login --hostname github.com --web --git-protocol https
+installer=$(mktemp) && gh api repos/ortusclub/ortus-profile-desk-team/contents/install.sh -H "Accept: application/vnd.github.raw" > "$installer" && bash "$installer"
 ```
 
-The installer downloads the latest private release, verifies it and installs it in Applications. It installs GitHub CLI via Homebrew if needed and prompts for GitHub sign-in. Without Homebrew, install GitHub CLI from https://cli.github.com first and rerun the command. Install Google Chrome to open profiles. macOS 13 or later is required; Intel and Apple Silicon are supported.
+Your GitHub account needs access to this private repository. Since the source repository is now private too, the previous public curl command no longer works.
 
-Alternatively, download **Ortus-Profile-Desk-universal.dmg** from [Releases](https://github.com/ortusclub/ortus-profile-desk-team/releases), open it and drag the app into Applications. If macOS blocks the app, use System Settings → Privacy & Security → Open Anyway for this trusted team download. The current app is ad-hoc signed, not Apple-notarized.
+## Load the shared profiles
+
+In version 0.1.4 or later, choose **Connect team workspace** and enter the workspace key supplied by your administrator. You only need to enter it once on each Mac. Active spreadsheet accounts and their proxy credentials load from the server into folders based on VM Account. New shared profiles and changes appear automatically on other connected Macs.
+
+The key is stored in the Mac's Keychain-encrypted vault. It is not bundled in the app or committed to either repository. Anyone given the key has shared workspace access; give it only to your team.
+
+The server refreshes the account sheet every five minutes and apps refresh every ten seconds. Blank spreadsheet proxy fields use direct connections. Browser login sessions and site storage remain local in this version; they do not transfer between Macs yet.
 
 ## Updates
 
-The sidebar shows the current version and **Check for updates**. The app checks automatically at startup and every four hours, downloads newer releases in the background, then offers **Restart to update**. Close profile windows before restarting. GitHub CLI must remain installed and signed into an account with access to this repository. Existing saved profiles are preserved.
+Use **Check for updates** in the sidebar. The app also checks at startup and every four hours, downloads updates in the background, and offers **Restart to update** after all profiles are closed. GitHub CLI must remain signed into an account with this repository's access. Saved profiles and the workspace connection are preserved.
 
-## Current status
+## Developers
 
-**0.1.3 is an installer/update preview with local profiles. Shared profiles and saved browser-session synchronization are not enabled yet.** A later private build will connect to the shared workspace automatically.
-
-Source: https://github.com/ortusclub/ortus-profile-desk. Never commit workspace credentials, browser sessions or account passwords to either repository.
+Work in **https://github.com/ortusclub/ortus-profile-desk** (private). That repository contains the desktop app, server, tests and deployment manifests. This repository is only for distribution and installation instructions. Ask the owner for collaborator access and the workspace key separately.
